@@ -115,13 +115,16 @@ class MultiHeadAttention:
 
 
 def test_multi_head_attention():
-    # Test parameters
+    # Model parameters
+    num_heads = 2
+    key_dim = 64
+    value_dim = 64
+    
+    # Input parameters
     batch_size = 2
     query_seq_len = 4
     key_seq_len = 6
-    d_model = 8
-    num_heads = 2
-    key_dim = 4
+    d_model = 128  # Typically d_model should be num_heads * key_dim
     
     # Create test inputs
     query = np.random.normal(0, 1, (batch_size, query_seq_len, d_model))
@@ -131,7 +134,7 @@ def test_multi_head_attention():
     mask = np.ones((batch_size, query_seq_len, key_seq_len))
     
     # Initialize layer
-    mha = MultiHeadAttention(num_heads=num_heads, key_dim=key_dim)
+    mha = MultiHeadAttention(num_heads=num_heads, key_dim=key_dim, value_dim=value_dim)
     
     # Test forward pass
     output = mha(query, value, mask=mask)
